@@ -1,0 +1,9 @@
+[workspace]
+
+members = [
+    "presentation",
+    "dependency_injection",
+    "infra",
+    "domain",
+    "use_case",
+]
