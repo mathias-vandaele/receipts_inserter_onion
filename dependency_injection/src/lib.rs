@@ -1,6 +1,8 @@
 use std::error::Error;
 use infra::Provider;
 use domain::Receipt;
+use use_case::tasks::insert_receipt::InsertReceipt;
+use use_case::tasks::get_receipt::GetReceipt;
 
 #[derive(Clone, Debug)]
 pub struct FeatureContainer {
@@ -13,8 +15,11 @@ impl FeatureContainer {
         FeatureContainer { infra_provider }
     }
 
-    pub async fn insert_receipt(&self, receipt: Receipt) -> Result<(), Box<dyn Error>> {
-        
-        Ok(())
+    pub fn insert_receipt(&self, from : String) -> InsertReceipt {
+        InsertReceipt::new(Box::new(self.infra_provider.provide_mongo_collection(from)))
+    }
+
+    pub fn get_receipt(&self, from : String) -> GetReceipt {
+        GetReceipt::new(Box::new(self.infra_provider.provide_mongo_collection(from)))
     }
 }

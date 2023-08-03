@@ -1,4 +1,4 @@
-mod repository;
+pub mod repository;
 mod models;
 
 pub use models::receipt::Receipt;

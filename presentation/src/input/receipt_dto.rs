@@ -1,3 +1,7 @@
+use std::pin::Pin;
+use std::task::{Context, Poll};
+use actix_web::body::{BodySize, MessageBody};
+use actix_web::web::Bytes;
 use domain::{Receipt, Item};
 use serde::{Serialize, Deserialize};
 use crate::input::item_dto::ItemDto;
@@ -8,16 +12,20 @@ pub struct ReceiptDto {
     items : Vec<ItemDto>
 }
 
-impl Into<Receipt> for ReceiptDto {
-    fn into(self) -> Receipt {
-        let mut items : Vec<Item> = Vec::new();
-        for item_dto in self.items {
-            items.push(item_dto.into());
-        }
+impl From<ReceiptDto> for Receipt {
+    fn from(value: ReceiptDto) -> Self {
         Receipt {
-            id : self.id,
-            items : items
+            id: value.id,
+            items: value.items.into_iter().map(|item| Item::from(item)).collect()
         }
     }
 }
 
+impl From<Receipt> for ReceiptDto {
+    fn from(value: Receipt) -> Self {
+        ReceiptDto {
+            id: value.id,
+            items: value.items.into_iter().map(|item| ItemDto::from(item)).collect()
+        }
+    }
+}

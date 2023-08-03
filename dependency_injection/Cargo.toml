@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 infra = { path = "../infra" }
 domain = { path = "../domain" }
+use_case = { path = "../use_case" }

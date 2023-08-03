@@ -1,3 +1,4 @@
+use actix_web::body::MessageBody;
 use domain::Item;
 use serde::{Serialize, Deserialize};
 
@@ -8,12 +9,24 @@ pub struct ItemDto{
     quantity : u16
 }
 
-impl Into<ItemDto> for Item {
-    fn into(self) -> ItemDto {
-        ItemDto {
-            item_code : self.item_code,
-            price : self.price,
-            quantity : self.quantity
+impl From<ItemDto> for Item {
+    fn from(value: ItemDto) -> Self {
+        Item {
+            item_code: value.item_code,
+            price: value.price,
+            quantity: value.quantity
         }
     }
 }
+
+impl From<Item> for ItemDto {
+    fn from(value: Item) -> Self {
+        ItemDto {
+            item_code: value.item_code,
+            price: value.price,
+            quantity: value.quantity
+        }
+    }
+}
+
+

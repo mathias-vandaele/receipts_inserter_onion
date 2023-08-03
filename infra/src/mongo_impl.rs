@@ -1,0 +1,1 @@
+pub mod mongo_impl_receipt;
