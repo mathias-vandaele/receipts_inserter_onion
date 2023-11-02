@@ -13,6 +13,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::Data::new(features.clone()))
             .service(handlers::insert_receipt::insert_receipt)
+            .service(handlers::get_receipt::get_receipt)
     })
         .bind(("0.0.0.0", 8080))?
         .run()

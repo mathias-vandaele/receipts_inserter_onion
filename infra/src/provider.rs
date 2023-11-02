@@ -25,7 +25,6 @@ impl Provider{
 
     pub fn provide_mongo_collection(&self, collection : String) -> impl ReceiptRepository + Send + Sync {
         MongoCollection::new(self.mongo_client.collection::<Receipt>(&collection))
-
     }
     
 }
